@@ -1,0 +1,33 @@
+.board {
+  padding: 16px;
+  background: #f4f5f7;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.board-header {
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  color: #172b4d;
+  text-align: left;
+}
+
+.board-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.board-description {
+  font-size: 14px;
+  color: #5e6c84;
+  margin: 0;
+}
+
+.board-columns {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: flex-start;
+  overflow-x: auto;
+}

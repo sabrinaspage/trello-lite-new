@@ -2,6 +2,7 @@ import type { BoardData } from "../api/board";
 import { useGetCardsByBoardId } from "../api/card";
 import { useGetColumnsByBoardId } from "../api/column";
 import { Column } from "./column";
+import "./board.css";
 
 interface BoardProps {
     body: BoardData
@@ -19,5 +20,15 @@ export const Board = ({ body }: BoardProps) => {
         return <div>error: {columnsError} {cardsError}</div>
     }
 
-    return <div><p>{body.title} {body.description}</p> {columns.map((column) => <Column body={column} cards={cards}/>)}</div>;
+    return (
+        <div className="board">
+            <div className="board-header">
+                <h1 className="board-title">{body.title}</h1>
+                <p className="board-description">{body.description}</p>
+            </div>
+            <div className="board-columns">
+                {columns.map((column) => <Column key={column.id} body={column} cards={cards}/>)}
+            </div>
+        </div>
+    );
 }
