@@ -28,9 +28,10 @@ const formReducer = (state: FormState, action: FormAction): FormState => {
 interface ColumnProps {
     body: ColumnData;
     cards: CardData[]
+    refetchCards: () => void;
 }
 
-export const Column = ({ body, cards }: ColumnProps) => {
+export const Column = ({ body, cards, refetchCards }: ColumnProps) => {
    const [modalIsOpen, setModalIsOpen] = useState(false);
    const [submitting, setSubmitting] = useState(false);
 
@@ -58,7 +59,7 @@ export const Column = ({ body, cards }: ColumnProps) => {
             })
             dispatch({ type: "reset" });
             setModalIsOpen(false);
-            // await refetchCards();
+            await refetchCards();
         } finally {
             setSubmitting(false);
         }
@@ -66,28 +67,28 @@ export const Column = ({ body, cards }: ColumnProps) => {
 
    return (<>
         <div className="column">
-        <div className="column-header">{body.status}</div>
-        <button onClick={() => setModalIsOpen(true)}>create card</button>
-        <Modal onClose={() => setModalIsOpen(false)} isOpen={modalIsOpen}>
-            <form onSubmit={handleSubmit}>
-                <input
-                  name="title"
-                  value={form.title}
-                  onChange={handleChange}
-                  placeholder="Title"
-                  required
-                />
-                <textarea
-                  name="description"
-                  value={form.description}
-                  onChange={handleChange}
-                  placeholder="Description"
-                />
-                <button type="submit" disabled={submitting}>
-                    {submitting ? "loading" : "submit"}
-                </button>
-            </form>
-        </Modal>
+            <div className="column-header">{body.status}</div>
+            <button onClick={() => setModalIsOpen(true)}>create card</button>
+            <Modal onClose={() => setModalIsOpen(false)} isOpen={modalIsOpen}>
+                <form onSubmit={handleSubmit}>
+                    <input
+                    name="title"
+                    value={form.title}
+                    onChange={handleChange}
+                    placeholder="Title"
+                    required
+                    />
+                    <textarea
+                    name="description"
+                    value={form.description}
+                    onChange={handleChange}
+                    placeholder="Description"
+                    />
+                    <button type="submit" disabled={submitting}>
+                        {submitting ? "loading" : "submit"}
+                    </button>
+                </form>
+            </Modal>
         <div className="column-cards">
             {cards.filter((card) => card.column_id === body.id).map((card, idx) => <Card key={idx} body={card} />)}
         </div>

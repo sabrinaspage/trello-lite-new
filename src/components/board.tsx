@@ -11,7 +11,7 @@ interface BoardProps {
 
 export const Board = ({ body }: BoardProps) => {
     const { columns, loading: columnsLoading, error: columnsError } = useGetColumnsByBoardId(body.id);
-    const { cards, loading: cardsLoading, error: cardsError } = useGetCardsByBoardId(body.id);
+    const { cards, loading: cardsLoading, error: cardsError, refetchCards } = useGetCardsByBoardId(body.id);
 
     if(columnsLoading && cardsLoading) {
         return <div> awaiting data </div>
@@ -29,7 +29,7 @@ export const Board = ({ body }: BoardProps) => {
                     <p className="board-description">{body.description}</p>
                 </div>
                 <div className="board-columns">
-                    {columns.map((column) => <Column key={column.id} body={column} cards={cards}/>)}
+                    {columns.map((column) => <Column key={column.id} body={column} cards={cards} refetchCards={refetchCards}/>)}
                 </div>
             </div>
         </BoardIdProvider>

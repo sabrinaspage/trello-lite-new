@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { supabaseFetch } from '../api/client';
 
 export const useFetchData = <T>(url: string, enabled: boolean = true) => {
@@ -6,9 +6,8 @@ export const useFetchData = <T>(url: string, enabled: boolean = true) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    useEffect(() => {
-        if(!enabled) return;
-        const fetchData = async () => {
+    const fetchData = useCallback(async () => {
+         if(!enabled) return;
           setLoading(true);
           try {
             const response = await supabaseFetch(url);
@@ -19,10 +18,14 @@ export const useFetchData = <T>(url: string, enabled: boolean = true) => {
           } finally {
             setLoading(false);
           }
-        };
+        }, [url, enabled])
 
+    // only runs when url and enabled have changed
+    useEffect(() => {
+         // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchData();
-    }, [url, enabled]);
+    }, [fetchData]);
 
-    return {data, loading, error};
+    // refetch is a manual call to the SAME fetchData we saw before
+    return {data, loading, error, refetch: fetchData};
 }
