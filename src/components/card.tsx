@@ -7,8 +7,8 @@ interface CardProps {
 
 export const Card = ({ body }: CardProps) => {
   const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
-    event.dataTransfer.setData("cardId", body.id);
-    console.log("dragging started for card:", body.id);
+    event.dataTransfer.setData('cardId', body.id);
+    console.log('dragging started for card:', body.id);
   };
 
   return (
