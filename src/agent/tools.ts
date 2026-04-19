@@ -1,6 +1,11 @@
-export const tools = [
+import type { Tool } from "@anthropic-ai/sdk/resources";
+import type { CardData } from "../api/card";
+
+export type ToolInput = { name: 'create_card', input: CardData };
+
+export const tools: Tool[] = [
   {
-    name: 'create_cards',
+    name: 'create_card',
     description:
       'Creates one or many cards on the Trello board. You must provide a title, description, and the column_id + status of the column to place it in.',
     input_schema: {

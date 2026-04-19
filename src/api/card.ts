@@ -15,6 +15,7 @@ export type CardData = {
   description: string;
   status: string;
   column_id: string;
+  board_id: string;
 };
 
 const PATH = 'card';
