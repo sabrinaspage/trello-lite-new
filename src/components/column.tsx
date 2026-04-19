@@ -4,6 +4,7 @@ import type { ColumnData } from "../api/column";
 import { Card } from "./card";
 import "./column.css";
 import { Modal } from "./modal";
+import { useBoardId } from "../contexts/board-id.context";
 
 type FormState = { title: string; description: string };
 
@@ -35,6 +36,8 @@ export const Column = ({ body, cards }: ColumnProps) => {
 
    const [form, dispatch] = useReducer(formReducer, initialFormState);
 
+   const boardId = useBoardId();
+
    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     dispatch({
         type: "set_field",
@@ -50,7 +53,7 @@ export const Column = ({ body, cards }: ColumnProps) => {
             await createCard({
                 ...form,
                 status: body.status, // designated by the column,
-                board_id: "board_id",
+                board_id: boardId,
                 column_id: body.id
             })
             dispatch({ type: "reset" });
