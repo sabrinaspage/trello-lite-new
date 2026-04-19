@@ -21,6 +21,6 @@ const PATH = 'card';
 export const createCard = (body: CreateCardInterface) => supabaseFetch(`${PATH}`, { method: "POST", body: JSON.stringify(body) });
 
 export const useGetCardsByBoardId = (boardId: string) => {
-    const { data, loading, error, refetch } = useFetchData<CardData[]>(`${PATH}?board_id=eq.${boardId}&limit=4`, !!boardId);
+    const { data, loading, error, refetch } = useFetchData<CardData[]>(`${PATH}?board_id=eq.${boardId}`, !!boardId);
     return { cards: data ?? [], loading, error, refetchCards: refetch};
 }
