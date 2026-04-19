@@ -4,12 +4,15 @@ import { useGetColumnsByBoardId } from '../api/column';
 import { Column } from './column';
 import './board.css';
 import { BoardIdProvider } from '../contexts/board-id.provider';
+import { useState } from 'react';
+import { AgentModal } from './agent-modal';
 
 interface BoardProps {
   body: BoardData;
 }
 
 export const Board = ({ body }: BoardProps) => {
+  const [openAgentModal, setOpenAgentModal] = useState(false);
   const { columns, loading: columnsLoading, error: columnsError } = useGetColumnsByBoardId(body.id);
   const {
     cards,
@@ -37,11 +40,18 @@ export const Board = ({ body }: BoardProps) => {
 
   return (
     <BoardIdProvider boardId={body.id}>
+      <AgentModal
+        isOpen={openAgentModal}
+        onClose={() => setOpenAgentModal(false)}
+        columns={columns}
+        refetchCards={refetchCards}
+      />
       <div className="board">
         <div className="board-header">
           <h1 className="board-title">{body.title}</h1>
           <p className="board-description">{body.description}</p>
           <button onClick={() => handleArchiveAll()}> archive all cards </button>
+          <button onClick={() => setOpenAgentModal(true)}> open agent modal </button>
         </div>
         <div className="board-columns">
           {columns.map((column) => (

@@ -15,6 +15,7 @@ export type CardData = {
   description: string;
   status: string;
   column_id: string;
+  board_id: string;
 };
 
 const PATH = 'card';
@@ -28,7 +29,7 @@ export const archiveAllCards = (boardId: string) =>
     body: JSON.stringify({ status: 'archived' }),
   });
 
-export const moveCard = (cardId: string, toColumnId: string, status: string) => 
+export const moveCard = (cardId: string, toColumnId: string, status: string) =>
   supabaseFetch(`${PATH}?id=eq.${cardId}`, {
     method: 'PATCH',
     body: JSON.stringify({ column_id: toColumnId, status }),

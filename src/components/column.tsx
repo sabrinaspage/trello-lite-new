@@ -51,7 +51,7 @@ export const Column = ({ body, cards, refetchCards }: ColumnProps) => {
     try {
       await createCard({
         ...form,
-        status: body.status, // designated by the column,
+        status: body.status, // designated by the column
         board_id: boardId,
         column_id: body.id,
       });
@@ -65,20 +65,20 @@ export const Column = ({ body, cards, refetchCards }: ColumnProps) => {
 
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-    console.log("dragging");
+    console.log('dragging');
     try {
-        console.log('cardId', event.dataTransfer.getData("cardId"));
-        const success = await moveCard(event.dataTransfer.getData("cardId"), body.id, body.status);
-        console.log(success);
-        await refetchCards();
+      console.log('cardId', event.dataTransfer.getData('cardId'));
+      const success = await moveCard(event.dataTransfer.getData('cardId'), body.id, body.status);
+      console.log(success);
+      await refetchCards();
     } catch {
-        throw new Error();
+      throw new Error();
     }
-  }
+  };
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-  }
+  };
 
   return (
     <>
