@@ -1,5 +1,5 @@
 import { useReducer, useState, type ChangeEvent, type SyntheticEvent } from 'react';
-import { createCard, type CardData } from '../api/card';
+import { createCard, moveCard, type CardData } from '../api/card';
 import type { ColumnData } from '../api/column';
 import { Card } from './card';
 import './column.css';
@@ -63,9 +63,26 @@ export const Column = ({ body, cards, refetchCards }: ColumnProps) => {
     }
   };
 
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    console.log("dragging");
+    try {
+        console.log('cardId', event.dataTransfer.getData("cardId"));
+        const success = await moveCard(event.dataTransfer.getData("cardId"), body.id, body.status);
+        console.log(success);
+        await refetchCards();
+    } catch {
+        throw new Error();
+    }
+  }
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  }
+
   return (
     <>
-      <div className="column">
+      <div className="column" onDrop={handleDrop} onDragOver={handleDragOver}>
         <div className="column-header">{body.status}</div>
         <button onClick={() => setModalIsOpen(true)}>create card</button>
         <Modal onClose={() => setModalIsOpen(false)} isOpen={modalIsOpen}>

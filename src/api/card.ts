@@ -1,6 +1,5 @@
 import { supabaseFetch } from './client';
 import { useFetchData } from '../hooks/useFetchData';
-import { useMutateData } from '../hooks/useMutateData';
 
 interface CreateCardInterface {
   status: string;
@@ -11,6 +10,7 @@ interface CreateCardInterface {
 }
 
 export type CardData = {
+  id: string;
   title: string;
   description: string;
   status: string;
@@ -28,19 +28,16 @@ export const archiveAllCards = (boardId: string) =>
     body: JSON.stringify({ status: 'archived' }),
   });
 
+export const moveCard = (cardId: string, toColumnId: string, status: string) => 
+  supabaseFetch(`${PATH}?id=eq.${cardId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ column_id: toColumnId, status }),
+  });
+
 export const useGetCardsByBoardId = (boardId: string) => {
   const { data, loading, error, refetch } = useFetchData<CardData[]>(
     `${PATH}?board_id=eq.${boardId}&status=neq.archived`,
     !!boardId,
   );
   return { cards: data ?? [], loading, error, refetchCards: refetch };
-};
-
-export const useArchiveAllCards = (boardId: string) => {
-  const { data, loading, error, refetch } = useMutateData<boolean>(
-    `${PATH}?board_id=eq.${boardId}&status=neq.archived`,
-    { method: 'PATCH', body: JSON.stringify({ status: 'archived' }) },
-    !!boardId,
-  );
-  return { success: data, loading, error, refetchCards: refetch };
 };
