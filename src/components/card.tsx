@@ -1,13 +1,20 @@
-import type { CardData } from "../api/card"
-import "./card.css";
+import type { CardData } from '../api/card';
+import './card.css';
 
 interface CardProps {
-   body: CardData;
+  body: CardData;
 }
 
 export const Card = ({ body }: CardProps) => (
-    <div className="card">
+  <div className="card">
+    <div className="card-header">
+      <div>
         <p className="card-title">{body.title}</p>
-        <p className="card-description">{body.description}</p>
+      </div>
+      <div>
+        <p className="card-status">{body.status.replaceAll('_', ' ')}</p>
+      </div>
     </div>
+    <p className="card-description">{body.description}</p>
+  </div>
 );

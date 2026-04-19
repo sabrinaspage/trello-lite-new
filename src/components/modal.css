@@ -57,7 +57,7 @@
   resize: vertical;
 }
 
-.modal-content button[type="submit"] {
+.modal-content button[type='submit'] {
   align-self: flex-start;
   background: #0052cc;
   color: #ffffff;
@@ -69,11 +69,11 @@
   cursor: pointer;
 }
 
-.modal-content button[type="submit"]:hover:not(:disabled) {
+.modal-content button[type='submit']:hover:not(:disabled) {
   background: #0747a6;
 }
 
-.modal-content button[type="submit"]:disabled {
+.modal-content button[type='submit']:disabled {
   background: #a5adba;
   cursor: not-allowed;
 }
