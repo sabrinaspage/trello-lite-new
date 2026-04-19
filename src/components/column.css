@@ -1,0 +1,29 @@
+.column {
+  background: #ebecf0;
+  border-radius: 6px;
+  padding: 8px;
+  width: 272px;
+  min-width: 272px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: calc(100vh - 80px);
+  box-sizing: border-box;
+}
+
+.column-header {
+  font-size: 14px;
+  font-weight: 600;
+  color: #172b4d;
+  padding: 6px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  text-align: left;
+}
+
+.column-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}
